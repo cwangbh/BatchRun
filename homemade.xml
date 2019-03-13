@@ -1,0 +1,122 @@
+<JANFEAInput version="3">
+  <Header>
+    <Description>Description of the simulation</Description>
+    <ConsistentUnits length="m" mass="kg" time="s"/>
+    <Analysis>12</Analysis>
+  </Header>
+  <MPMHeader>
+    <MPMMethod>2</MPMMethod>
+    <GIMP type="uGIMP"/>
+    <TimeStep>1e-3</TimeStep>
+    <TimeFactor>0.5</TimeFactor>
+    <MaxTime>3</MaxTime>
+    <ArchiveRoot>Impact3D_40_Feb24_0.04mThick/impact</ArchiveRoot>
+    <ArchiveTime>0.04</ArchiveTime>
+    <MPMArchiveOrder>iYYYYNNNNNNNYNNNNYNNN</MPMArchiveOrder>
+    <GlobalArchiveTime>0.04</GlobalArchiveTime>
+    <GlobalArchive material="3" type="sxx"/>
+    <GlobalArchive material="3" type="Kinetic Energy"/>
+    <GlobalArchive material="3" type="Work Energy"/>
+    <GlobalArchive material="1" type="sxx"/>
+    <GlobalArchive material="1" type="Kinetic Energy"/>
+    <GlobalArchive material="1" type="Work Energy"/>
+    <GlobalArchive material="1" type="Internal Energy"/>
+    <GlobalArchive material="1" type="Plastic Energy"/>
+    <PDamping PIC="0.01">0.75</PDamping>
+    <MultiMaterialMode Dcheck="1" Normals="2" RigidBias="0" Vmin="0.8">
+      <ContactPosition>0.8</ContactPosition>
+      <Friction law="2"/>
+    </MultiMaterialMode>
+  </MPMHeader>
+  <Mesh output="file">
+    <Grid xmax="2" xmin="-0.8" ymax="1" ymin="-0.2" zmax="0.3" zmin="-0.3">
+      <Horiz nx="140.0"/>
+      <Vert ny="60.0"/>
+      <Depth nz="30.0"/>
+    </Grid>
+  </Mesh>
+  <MaterialPoints>
+    <Body mat="1" vx="0" vy="0" vz="0">
+      <Box xmax="0" xmin="-0.18" ymax="0.315" ymin="0" zmax="0.1" zmin="-0.1"/>
+    </Body>
+    <Body mat="3" vx="0" vy="0" vz="0">
+      <Box xmax="2" xmin="-0.8" ymax="0" ymin="-0.2" zmax="0.1" zmin="-0.1"/>
+    </Body>
+    <Body mat="4" vx="0" vy="0" vz="0">
+      <Box xmax="2" xmin="-0.8" ymax="1" ymin="-0.2" zmax="-0.1" zmin="-0.3"/>
+      <Box xmax="2" xmin="-0.8" ymax="1" ymin="-0.2" zmax="0.3" zmin="0.1"/>
+    </Body>
+    <Body mat="4" vx="0" vy="0" vz="0">
+      <Box xmax="-0.2" xmin="-0.3" ymax="0.8" ymin="0" zmax="0.1" zmin="-0.1"/>
+    </Body>
+    <Body mat="3" vx="0" vy="0" vz="0">
+      <Box xmax="1.24" xmin="1.2" ymax="0.6" ymin="0" zmax="0.2" zmin="-0.2"/>
+    </Body>
+    <Body mat="6" vx="0" vy="0" vz="0">
+      <Box xmax="0.2" xmin="0" ymax="0.6" ymin="0" zmax="0.1" zmin="-0.1"/>
+    </Body>
+  </MaterialPoints>
+  <Material Name="Sand" Type="101">
+    <E>0.84E6</E>
+    <nu>0.3</nu>
+    <rho>2.65e3</rho>
+    <Hardening>DpHardening</Hardening>
+    <q_fai>0.239</q_fai>
+    <k_fai>0.12</k_fai>
+    <q_psi>0</q_psi>
+    <sig_t>0</sig_t>
+  </Material>
+  <Material Name="Coulomb Friction" Type="61">
+    <coeff>0.4</coeff>
+    <coeffStatic>0.4</coeffStatic>
+  </Material>
+  <Material Name="Bottom" Type="11">
+    <SetDirection>8</SetDirection>
+    <mirrored>1</mirrored>
+    <Friction law="2" mat="1"/>
+  </Material>
+  <Material Name="Side wall" Type="11">
+    <SetDirection>8</SetDirection>
+    <mirrored>1</mirrored>
+  </Material>
+  <Material Name="Barrier" Type="1">
+    <E>5e5</E>
+    <nu>0.3</nu>
+    <rho>2.65e3</rho>
+  </Material>
+  <Material Name="door" Type="11">
+    <SetDirection>8</SetDirection>
+    <mirrored>1</mirrored>
+    <SettingFunction>0</SettingFunction>
+    <SettingFunction2>( sign(t-1.0)- sign(t-1.200) )*3.000</SettingFunction2>
+    <SettingFunction3>0</SettingFunction3>
+  </Material>
+  <Gravity>
+    <BodyXForce>0.6427876096865393</BodyXForce>
+    <BodyYForce>-0.766044443118978</BodyYForce>
+    <BodyZForce>0</BodyZForce>
+  </Gravity>
+  <GridBCs>
+    <BCBox xmax="2" xmin="-0.8" ymax="-0.05" ymin="-0.2" zmax="0.2" zmin="-0.2">
+      <DisBC dir="1" style="constant" vel="0"/>
+      <DisBC dir="2" style="constant" vel="0"/>
+      <DisBC dir="3" style="constant" vel="0"/>
+    </BCBox>
+    <BCBox xmax="1.24" xmin="1.2" ymax="0.6" ymin="-0.1" zmax="-0.1" zmin="-0.2">
+      <DisBC dir="1" style="constant" vel="0"/>
+      <DisBC dir="2" style="constant" vel="0"/>
+      <DisBC dir="3" style="constant" vel="0"/>
+    </BCBox>
+    <BCBox xmax="1.24" xmin="1.2" ymax="0.6" ymin="-0.1" zmax="0.2" zmin="0.1">
+      <DisBC dir="1" style="constant" vel="0"/>
+      <DisBC dir="2" style="constant" vel="0"/>
+      <DisBC dir="3" style="constant" vel="0"/>
+    </BCBox>
+    <BCBox xmax="-0.25" xmin="-0.8" ymax="1" ymin="0" zmax="0.2" zmin="-0.2">
+      <DisBC dir="1" style="constant" vel="0"/>
+      <DisBC dir="2" style="constant" vel="0"/>
+      <DisBC dir="3" style="constant" vel="0"/>
+    </BCBox>
+  </GridBCs>
+  <CustomTasks/>
+</JANFEAInput>
